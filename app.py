@@ -30,6 +30,10 @@ def electives():
 @app.route('/ai')
 def ai():
     return render_template('ai.html')
+    
+@app.route('/ask')
+def ai():
+    return render_template('ask.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
