@@ -3,42 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>中英問答 - Ask</title>
+  <title>中英問答</title>
   <style>
-    body { font-family: "Noto Sans TC", Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; }
-    h1 { font-size: 1.6rem; margin-bottom: 8px; }
-    form { margin-bottom: 20px; }
-    input[type="text"]{ width: 100%; padding: 10px; font-size: 1rem; box-sizing: border-box; }
-    button { padding: 8px 14px; font-size: 1rem; margin-top: 8px; }
-    .result { background:#f7f7f7; padding:12px; border-radius:6px; margin-top:12px; }
-    .label { color:#666; font-size:0.9rem; margin-bottom:6px; }
+    body {
+      font-family: "Noto Sans TC", Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fafafa;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    form {
+      text-align: center;
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 8px 14px;
+      font-size: 1rem;
+      margin-left: 5px;
+    }
+    .result {
+      margin-top: 30px;
+      text-align: center;
+      background: #f2f2f2;
+      padding: 15px;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
-  <h1>中英互譯（輸入中文或英文單字）</h1>
-
+  <h1>中英互譯問答</h1>
   <form method="post" action="/ask">
-    <label class="label" for="question">輸入單字（例：蘋果 / apple）</label>
-    <input id="question" name="question" type="text" placeholder="輸入單字..." value="{{ question }}" autocomplete="off" required />
-    <br />
-    <button type="submit">查詢翻譯</button>
+    <input type="text" name="question" placeholder="請輸入中文或英文單字" value="{{ question }}" required />
+    <button type="submit">翻譯</button>
   </form>
 
   {% if question %}
-    <div class="result">
-      <strong>查詢：</strong> {{ question }}<br />
-      <strong>翻譯 / 回答：</strong>
-      {% if answer %}
-        {{ answer }}
-      {% else %}
-        抱歉，我還不知道這個單字的翻譯。
-      {% endif %}
-    </div>
-  {% else %}
-    <div class="result">
-      在上方輸入單字並按「查詢翻譯」。
-    </div>
+  <div class="result">
+    <strong>你輸入的單字：</strong> {{ question }}<br>
+    <strong>翻譯結果：</strong> {{ answer }}
+  </div>
   {% endif %}
-
 </body>
 </html>
