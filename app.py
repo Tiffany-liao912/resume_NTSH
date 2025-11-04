@@ -40,52 +40,24 @@ questions_answers = {
     "難過": "sad"
 }
 
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return "<h2>歡迎使用中英翻譯網站！請前往 <a href='/ask'>/ask</a> 問答頁面。</h2>"
 
-@app.route('/competition')
-def competition():
-    return render_template('competition.html')
-
-@app.route('/activities')
-def activities():
-    return render_template('activities.html')
-
-@app.route('/leadership')
-def leadership():
-    return render_template('leadership.html')
-
-@app.route('/club')
-def club():
-    return render_template('club.html')
-
-@app.route('/electives')
-def electives():
-    return render_template('electives.html')
-
-@app.route('/ai')
-def ai():
-    return render_template('ai.html')
-
-
-# ✅ 問答頁面（中翻英 / 英翻中）
+# ✅ 中翻英 / 英翻中問答頁面
 @app.route('/ask', methods=['GET', 'POST'])
 def ask():
     question = ""
     answer = ""
 
     if request.method == 'POST':
-        question = request.form.get('question', '').strip()  # 使用者輸入的問題
-        # 判斷是否存在於字典中
+        question = request.form.get('question', '').strip()
         if question in questions_answers:
             answer = questions_answers[question]
         else:
             answer = "抱歉，我還不知道這個單字的翻譯。"
 
     return render_template('ask.html', question=question, answer=answer)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
