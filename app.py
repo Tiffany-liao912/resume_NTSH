@@ -2,37 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# --- 原有的路由 ---
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/competition')
-def competition():
-    return render_template('competition.html')
-
-@app.route('/activities')
-def activities():
-    return render_template('activities.html')
-
-@app.route('/leadership')
-def leadership():
-    return render_template('leadership.html')
-
-@app.route('/club')
-def club():
-    return render_template('club.html')
-
-@app.route('/electives')
-def electives():
-    return render_template('electives.html')
-
-@app.route('/ai')
-def ai():
-    return render_template('ai.html')
-
-
-# --- 新增的問答功能 ---
+# 建立問答集
 questions_answers = {
     "蘋果": "apple",
     "apple": "蘋果",
@@ -70,6 +40,37 @@ questions_answers = {
     "難過": "sad"
 }
 
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/competition')
+def competition():
+    return render_template('competition.html')
+
+@app.route('/activities')
+def activities():
+    return render_template('activities.html')
+
+@app.route('/leadership')
+def leadership():
+    return render_template('leadership.html')
+
+@app.route('/club')
+def club():
+    return render_template('club.html')
+
+@app.route('/electives')
+def electives():
+    return render_template('electives.html')
+
+@app.route('/ai')
+def ai():
+    return render_template('ai.html')
+
+
+# ✅ 唯一保留這個 /ask 路由
 @app.route('/ask', methods=['GET', 'POST'])
 def ask():
     question = ""
