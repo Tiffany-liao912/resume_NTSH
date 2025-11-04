@@ -2,7 +2,37 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# 中英對照問答集
+# --- 原有的路由 ---
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/competition')
+def competition():
+    return render_template('competition.html')
+
+@app.route('/activities')
+def activities():
+    return render_template('activities.html')
+
+@app.route('/leadership')
+def leadership():
+    return render_template('leadership.html')
+
+@app.route('/club')
+def club():
+    return render_template('club.html')
+
+@app.route('/electives')
+def electives():
+    return render_template('electives.html')
+
+@app.route('/ai')
+def ai():
+    return render_template('ai.html')
+
+
+# --- 新增的問答功能 ---
 questions_answers = {
     "蘋果": "apple",
     "apple": "蘋果",
@@ -40,24 +70,18 @@ questions_answers = {
     "難過": "sad"
 }
 
-@app.route('/')
-def index():
-    return "<h2>歡迎使用中英翻譯網站！請前往 <a href='/ask'>/ask</a> 問答頁面。</h2>"
-
-# ✅ 中翻英 / 英翻中問答頁面
 @app.route('/ask', methods=['GET', 'POST'])
 def ask():
     question = ""
     answer = ""
-
     if request.method == 'POST':
         question = request.form.get('question', '').strip()
         if question in questions_answers:
             answer = questions_answers[question]
         else:
             answer = "抱歉，我還不知道這個單字的翻譯。"
-
     return render_template('ask.html', question=question, answer=answer)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
