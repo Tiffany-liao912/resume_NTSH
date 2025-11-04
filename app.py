@@ -1,9 +1,8 @@
-
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# 建立問答集 Store questions and answers in a simple list for demonstration purposes
+# 中英對照問答集
 questions_answers = {
     "蘋果": "apple",
     "apple": "蘋果",
@@ -36,7 +35,9 @@ questions_answers = {
     "醫生": "doctor",
     "doctor": "醫生",
     "護士": "nurse",
-    "sad": "難過"
+    "nurse": "護士",
+    "sad": "難過",
+    "難過": "sad"
 }
 
 
@@ -60,17 +61,6 @@ def leadership():
 def club():
     return render_template('club.html')
 
-# 網頁/ask的處理
-@app.route('/ask', methods=['GET', 'POST'])
-def ask_question():
-    if request.method == 'POST':
-        q = request.form['question']
-        a = questions_answers[q]
-        return render_template('ask.html', question=q, answer=a)
-    return render_template('ask.html', question="", answer="")
-
-
-
 @app.route('/electives')
 def electives():
     return render_template('electives.html')
@@ -79,11 +69,23 @@ def electives():
 def ai():
     return render_template('ai.html')
 
-@app.route('/ask')
-def ask():
-    return render_template('ask.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# ✅ 問答頁面（中翻英 / 英翻中）
+@app.route('/ask', methods=['GET', 'POST'])
+def ask():
+    question = ""
+    answer = ""
+
+    if request.method == 'POST':
+        question = request.form.get('question', '').strip()  # 使用者輸入的問題
+        # 判斷是否存在於字典中
+        if question in questions_answers:
+            answer = questions_answers[question]
+        else:
+            answer = "抱歉，我還不知道這個單字的翻譯。"
+
+    return render_template('ask.html', question=question, answer=answer)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
