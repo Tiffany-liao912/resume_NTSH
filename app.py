@@ -79,6 +79,10 @@ def electives():
 def ai():
     return render_template('ai.html')
 
+@app.route('/ask')
+def ask():
+    return render_template('ask.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 if __name__ == '__main__':
